@@ -8,15 +8,12 @@ import {
 import {
   probekreisflaeche, zielProfil, aktiverBzt, verjuengungsfreundlich, giltAlsVerlegt,
 } from "./berechnung.js";
-import { nachUtm33, ausUtm33, entfernung, peilung, himmelsrichtung } from "./utm33.js";
+import { nachUtm33, ausUtm33, entfernung, peilung, himmelsrichtung } from "bausteine/geo";
 import { Abschnitt, Feld, TextFeld, AuswahlFeld, KnopfWahl, JaNein, beschriftung } from "./Felder.jsx";
 import KoordinatenKopieren from "./komponenten/KoordinatenKopieren.jsx";
+import { nk as nkBaustein } from "bausteine/zahlen";
 
-const nk = (wert, stellen = 1) =>
-  Number(wert).toLocaleString("de-DE", {
-    minimumFractionDigits: stellen,
-    maximumFractionDigits: stellen,
-  });
+const nk = (wert, stellen = 1) => nkBaustein(wert, stellen, "de-DE");
 
 /* Ein errechneter Wert. Nichts hier ist eintippbar - das ist Absicht: was
    die App ausrechnet, soll niemand im Gelaende versehentlich ueberschreiben. */
