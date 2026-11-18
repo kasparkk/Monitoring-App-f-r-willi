@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { farben } from "../konfiguration.js";
-import { nachUtm33 } from "../utm33.js";
+import { nachUtm33 } from "bausteine/geo";
 
 /* Koordinate zum Antippen und Weitergeben.
 

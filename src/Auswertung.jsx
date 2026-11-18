@@ -5,12 +5,9 @@ import {
   zielProfil, aktiverBzt, verjuengungsfreundlich, aktiveArten,
 } from "./berechnung.js";
 import { beschriftung } from "./Felder.jsx";
+import { nk as nkBaustein } from "bausteine/zahlen";
 
-const nk = (wert, stellen = 0) =>
-  Number(wert).toLocaleString("de-DE", {
-    minimumFractionDigits: stellen,
-    maximumFractionDigits: stellen,
-  });
+const nk = (wert, stellen = 0) => nkBaustein(wert, stellen, "de-DE");
 
 const STUFEN_FARBE = { VZ1: farben.unverb, VZ2: "#D9A441", VZ3: farben.verb };
 
