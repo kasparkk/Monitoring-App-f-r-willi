@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { farben } from "./konfiguration.js";
-import { baueXlsx } from "./xlsx.js";
+import { baueXlsx } from "bausteine/export";
 import Kopf from "./Kopf.jsx";
 import Pflanzen from "./Pflanzen.jsx";
 import Auswertung from "./Auswertung.jsx";
@@ -8,6 +8,7 @@ import { laden, speichern, neuerPunkt, naechsteNummer, VORLAGE_FELDER } from "./
 import { masterZeilen, baueCsv, baueGeoJson } from "./export.js";
 import { sollpunkteLesen } from "./einlesen.js";
 import { istVerbissen } from "./berechnung.js";
+import { weitergeben as weitergebenDatei } from "bausteine/export";
 
 /* Verjuengungszustandsmonitoring - die Aufnahmemaske der Landesforst
    Brandenburg als App.
@@ -145,23 +146,7 @@ export default function Monitoring() {
      die Datei direkt in Excel, Mail oder der Wolke. Klappt das nicht, wird
      sie schlicht heruntergeladen. */
   const ausgeben = async (blob, name, titel) => {
-    try {
-      const datei = new File([blob], name, { type: blob.type });
-      if (navigator.canShare?.({ files: [datei] })) {
-        await navigator.share({ files: [datei], title: titel });
-        return;
-      }
-    } catch (fehler) {
-      if (fehler?.name === "AbortError") return;
-    }
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = name;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
+    if ((await weitergebenDatei(blob, name, titel)) !== "gespeichert") return;
     setHinweis(`${name} gespeichert`);
   };
 
